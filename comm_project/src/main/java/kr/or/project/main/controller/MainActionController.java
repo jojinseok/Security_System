@@ -1,6 +1,7 @@
 package kr.or.project.main.controller;
 
 import java.io.File;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -24,6 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.project.main.model.NoticeInfo;
 import kr.or.project.main.service.MainService;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+
 @Controller 
 public class MainActionController {
 	
@@ -94,21 +100,54 @@ public class MainActionController {
 		return mv;
 	}
 	
+	
+
+	@RequestMapping(value = "/test")
+	public ModelAndView test(HttpSession session, Locale locale, Model model) throws Exception{
+		
+		System.out.println("mainpage call!");
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("data", "연습입니다");
+		mv.setViewName( "/main/test");
+		
+		return mv;
+	}
+	
+	
 	@RequestMapping(value="/test",method=RequestMethod.POST)
-	public String Test(@RequestParam("id") String id,@RequestParam("url")String url,@RequestParam("file") MultipartFile file ,Model model) {
+	public void Test(@RequestParam("id") String id,@RequestParam("url")String url,@RequestParam("file") MultipartFile file ,Model model) {
 		System.out.println("POSTSPOTSTOPSOTSOPTS!");
 		model.addAttribute("data",id);
 		System.out.println(id);
 		System.out.println(url);
 		
+		
+		String path = "C:\\server\\"+url; //폴더 경로
+		File Folder = new File(path);
+		
+		// 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
+		if (!Folder.exists()) {
+			try{
+				Files.createDirectories(Paths.get(path));
+			    System.out.println("폴더가 생성되었습니다.");
+		        } 
+		        catch(Exception e){
+			    e.getStackTrace();
+			}        
+	         }else {
+			System.out.println("이미 폴더가 생성되어 있습니다.");
+		}
+		
+		
 		String name=file.getOriginalFilename();
-		File f=new File("c:\\upload\\"+name);
+		File f=new File(path+"\\"+name);
 		System.out.println(name);
 		try {
 			file.transferTo(f);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/main/test";
 	}
 }
