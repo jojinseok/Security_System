@@ -6,7 +6,7 @@ IOT 빅데이터 응용 교육 과정 프로젝트
 
 금고 보안 시스템 
 
-
+<br>
 팀원 : 
 
 조진석 : 백엔드 개발자
@@ -17,14 +17,14 @@ IOT 빅데이터 응용 교육 과정 프로젝트
 
 신우성 : 프론트엔드 개발자
 
-
+<br>
 개발 환경 :
 
 Spring Framework : Eclipse
 DB : MariaDB
 IOT : Raspberry pi, Python
 
-
+<br>
 협업툴 :
 
 SVN 
